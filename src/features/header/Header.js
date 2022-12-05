@@ -8,7 +8,7 @@ const Header = () => {
     const handleChange = e => setText(e.target.value)
 
     const handleKeyDown = e => {
-        const trimmedText = e.target.value.tirm()
+        const trimmedText = e.target.value.trim()
         if (e.key === "Enter" && trimmedText) {
             dispatch({
                 type: "todos/todoAdded",

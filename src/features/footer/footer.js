@@ -81,6 +81,14 @@ const Footer = () => {
 
   const {status, colors} = useSelector(state => state.filters)
 
+  const onStatusChange = () => {
+
+  }
+
+  const onColorChange = () => {
+    
+  }
+
   return (
     <footer className="footer">
       <div className="actions">
