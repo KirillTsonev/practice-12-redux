@@ -8,7 +8,7 @@ const TodoList = () => {
     const todos = useSelector(selectTodos)
 
     const renderedListItems = todos.map(todo => {
-        return <TodoListitem key={todo.id} todo={todo} />
+        return <TodoListItem key={todo.id} todo={todo} />
     })
 
     return <ul className="todo-list">{renderedListItems}</ul>
