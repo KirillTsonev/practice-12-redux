@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { availableColors, capitalize } from '../filters/colors'
 import { StatusFilters } from '../filters/filtersSlice'
@@ -16,14 +16,23 @@ const RemainingTodos = ({ count }) => {
 }
 
 const StatusFilter = ({ value: status, onChange }) => {
+
+  const dispatch = useDispatch()
+
   const renderedFilters = Object.keys(StatusFilters).map((key) => {
     const value = StatusFilters[key]
-    const handleClick = () => onChange(value)
     const className = value === status ? 'selected' : ''
+
+    const handleClick = (value) => {
+      dispatch({
+        type: 'filters/statusFilterChanged',
+        payload: value,
+      })
+    }
 
     return (
       <li key={value}>
-        <button className={className} onClick={handleClick}>
+        <button className={className} onClick={() => handleClick(value)}>
           {key}
         </button>
       </li>
@@ -80,25 +89,34 @@ const Footer = () => {
   })
 
   const {status, colors} = useSelector(state => state.filters)
+  const dispatch = useDispatch()
 
-  const onStatusChange = () => {
+  const onColorChange = () => {
 
   }
 
-  const onColorChange = () => {
-    
+  const onMarkCompleted = () => {
+    dispatch({
+      type: "allCompleted"
+    })
+  }
+
+  const onClearCompleted = () => {
+    dispatch({
+      type: "completedCleared"
+    })
   }
 
   return (
     <footer className="footer">
       <div className="actions">
         <h5>Actions</h5>
-        <button className="button">Mark All Completed</button>
-        <button className="button">Clear Completed</button>
+        <button className="button" onClick={onMarkCompleted} >Mark All Completed</button>
+        <button className="button" onClick={onClearCompleted} >Clear Completed</button>
       </div>
 
       <RemainingTodos count={todosRemaining} />
-      <StatusFilter value={status} onChange={onStatusChange} />
+      <StatusFilter value={status} />
       <ColorFilters value={colors} onChange={onColorChange} />
     </footer>
   )
